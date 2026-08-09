@@ -1,0 +1,15 @@
+{
+  "name": "frontend-app",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "^7.8.2",
+    "axios": "^1.11.0",
+    "@testing-library/react": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/user-event": "latest",
+    "msw": "latest",
+    "jest": "latest"
+  }
+}
