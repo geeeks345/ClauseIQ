@@ -1,0 +1,178 @@
+warning: in the working copy of 'frontEnd/src/App.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontEnd/src/pages/dashboard.jsx', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/backEnd/controllers/authController.js b/backEnd/controllers/authController.js[m
+[1mindex e95c5e2..e4ae63d 100644[m
+[1m--- a/backEnd/controllers/authController.js[m
+[1m+++ b/backEnd/controllers/authController.js[m
+[36m@@ -15,13 +15,13 @@[m [mconst generateToken = (id) => {[m
+ // ==========================[m
+ // Register User[m
+ // ==========================[m
+[31m-export const registerUser = async (req, res) => {[m
+[31m-  try {[m
+[31m-    const { name, email, password, role } = req.body;[m
+[31m-    const normalizedRole = role === "admin" ? "admin" : "user";[m
+[31m-[m
+[31m-    // Validation[m
+[31m-    if (!name || !email || !password) {[m
+[32m+[m[32mexport const registerUser = async (req, res) => {[m[41m[m
+[32m+[m[32m  try {[m[41m[m
+[32m+[m[32m    const { name, email, password, role } = req.body;[m[41m[m
+[32m+[m[32m    const normalizedRole = role === "admin" ? "admin" : "user";[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    // Validation[m[41m[m
+[32m+[m[32m    if (!name || !email || !password) {[m[41m[m
+       return res.status(400).json({[m
+         success: false,[m
+         message: "All fields are required",[m
+[36m@@ -39,12 +39,12 @@[m [mexport const registerUser = async (req, res) => {[m
+     }[m
+ [m
+     // Create user[m
+[31m-    const user = await User.create({[m
+[31m-      name,[m
+[31m-      email,[m
+[31m-      password,[m
+[31m-      role: normalizedRole,[m
+[31m-    });[m
+[32m+[m[32m    const user = await User.create({[m[41m[m
+[32m+[m[32m      name,[m[41m[m
+[32m+[m[32m      email,[m[41m[m
+[32m+[m[32m      password,[m[41m[m
+[32m+[m[32m      role: normalizedRole,[m[41m[m
+[32m+[m[32m    });[m[41m[m
+ [m
+     res.status(201).json({[m
+       success: true,[m
+[36m@@ -121,4 +121,22 @@[m [mexport const loginUser = async (req, res) => {[m
+     });[m
+ [m
+   }[m
+[31m-};[m
+[32m+[m[32m};[m[41m[m
+[32m+[m[32mexport const getCurrentUser = async (req, res) => {[m[41m[m
+[32m+[m[32m  try {[m[41m[m
+[32m+[m[32m    res.status(200).json({[m[41m[m
+[32m+[m[32m      success: true,[m[41m[m
+[32m+[m[32m      user: {[m[41m[m
+[32m+[m[32m        id: req.user._id,[m[41m[m
+[32m+[m[32m        name: req.user.name,[m[41m[m
+[32m+[m[32m        email: req.user.email,[m[41m[m
+[32m+[m[32m        role: req.user.role,[m[41m[m
+[32m+[m[32m      },[m[41m[m
+[32m+[m[32m    });[m[41m[m
+[32m+[m[32m  } catch (error) {[m[41m[m
+[32m+[m[32m    res.status(500).json({[m[41m[m
+[32m+[m[32m      success: false,[m[41m[m
+[32m+[m[32m      message: error.message,[m[41m[m
+[32m+[m[32m    });[m[41m[m
+[32m+[m[32m  }[m[41m[m
+[32m+[m[32m};[m
+\ No newline at end of file[m
+[1mdiff --git a/backEnd/routes/authRoutes.js b/backEnd/routes/authRoutes.js[m
+[1mindex ac9351b..344d47a 100644[m
+[1m--- a/backEnd/routes/authRoutes.js[m
+[1m+++ b/backEnd/routes/authRoutes.js[m
+[36m@@ -2,12 +2,19 @@[m [mimport express from "express";[m
+ import {[m
+   registerUser,[m
+   loginUser,[m
+[32m+[m[32m  getCurrentUser,[m[41m[m
+ } from "../controllers/authController.js";[m
+ [m
+[32m+[m[32mimport authMiddleware from "../middleware/authMiddleware.js";[m[41m[m
+[32m+[m[41m[m
+ const router = express.Router();[m
+ [m
+ router.post("/register", registerUser);[m
+ [m
+ router.post("/login", loginUser);[m
+ [m
+[32m+[m[32mrouter.get("/me", authMiddleware, getCurrentUser);[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mrouter.get("/me", authMiddleware, getCurrentUser);[m[41m[m
+[32m+[m[41m[m
+ export default router;[m
+\ No newline at end of file[m
+[1mdiff --git a/frontEnd/src/App.jsx b/frontEnd/src/App.jsx[m
+[1mindex ce8a15a..67be640 100644[m
+[1m--- a/frontEnd/src/App.jsx[m
+[1m+++ b/frontEnd/src/App.jsx[m
+[36m@@ -3,13 +3,21 @@[m [mimport { BrowserRouter, Routes, Route } from "react-router-dom";[m
+ import Login from "./pages/login";[m
+ import Register from "./pages/register";[m
+ import Dashboard from "./pages/dashboard";[m
+[32m+[m[32mimport ProtectedRoute from "./components/ProtectedRoute";[m
+ [m
+ export function AppRoutes() {[m
+   return ([m
+     <Routes>[m
+       <Route path="/" element={<Login />} />[m
+       <Route path="/register" element={<Register />} />[m
+[31m-      <Route path="/dashboard" element={<Dashboard />} />[m
+[32m+[m[32m      <Route[m
+[32m+[m[32m        path="/dashboard"[m
+[32m+[m[32m            element={[m
+[32m+[m[32m              <ProtectedRoute>[m
+[32m+[m[32m              <Dashboard />[m
+[32m+[m[32m    </ProtectedRoute>[m
+[32m+[m[32m  }[m
+[32m+[m[32m/>[m
+     </Routes>[m
+   );[m
+ }[m
+[1mdiff --git a/frontEnd/src/pages/dashboard.jsx b/frontEnd/src/pages/dashboard.jsx[m
+[1mindex 50f2195..8c63a02 100644[m
+[1m--- a/frontEnd/src/pages/dashboard.jsx[m
+[1m+++ b/frontEnd/src/pages/dashboard.jsx[m
+[36m@@ -177,5 +177,5 @@[m [mconst Dashboard = () => {[m
+     </div>[m
+   );[m
+ };[m
+[31m-[m
+[32m+[m
+ export default Dashboard;[m
+[1mdiff --git a/frontEnd/src/services/authService.js b/frontEnd/src/services/authService.js[m
+[1mindex ecbc9c5..883bfea 100644[m
+[1m--- a/frontEnd/src/services/authService.js[m
+[1m+++ b/frontEnd/src/services/authService.js[m
+[36m@@ -1,16 +1,30 @@[m
+[31m-import axios from "axios";[m
+[31m-import { API_CONFIG } from "../config/api.js";[m
+[32m+[m[32mimport axios from "axios";[m[41m[m
+[32m+[m[32mimport { API_CONFIG } from "../config/api";[m[41m[m
+ [m
+ const API = axios.create({[m
+[31m-    baseURL: `${API_CONFIG.BASE_URL}/api/${API_CONFIG.API_VERSION}/auth`,[m
+[31m-    headers: {[m
+[31m-    "Content-Type": "application/json",[m
+[31m-    },[m
+[31m-    // withCredentials: true,[m
+[32m+[m[32m  baseURL: `${API_CONFIG.BASE_URL}/api/${API_CONFIG.API_VERSION}/auth`,[m[41m[m
+ });[m
+ [m
+[32m+[m[32m// Attach JWT automatically to authenticated requests[m[41m[m
+[32m+[m[32mAPI.interceptors.request.use([m[41m[m
+[32m+[m[32m  (config) => {[m[41m[m
+[32m+[m[32m    const token = localStorage.getItem("token");[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    if (token) {[m[41m[m
+[32m+[m[32m      config.headers.Authorization = `Bearer ${token}`;[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    return config;[m[41m[m
+[32m+[m[32m  },[m[41m[m
+[32m+[m[32m  (error) => {[m[41m[m
+[32m+[m[32m    return Promise.reject(error);[m[41m[m
+[32m+[m[32m  }[m[41m[m
+[32m+[m[32m);[m[41m[m
+[32m+[m[41m[m
+ export const loginUser = (data) => API.post("/login", data);[m
+ [m
+ export const registerUser = (data) => API.post("/register", data);[m
+ [m
+[31m-export default API;[m
+[32m+[m[32mexport const getCurrentUser = () => API.get("/me");[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mexport default API;[m
+\ No newline at end of file[m
