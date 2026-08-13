@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 
+import contractRoutes from "./routes/contractRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
 
@@ -47,6 +48,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/contracts", contractRoutes);
 app.use("/api/reports", reportRoutes);
 
 export default app;

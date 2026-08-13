@@ -1,12 +1,12 @@
-
-
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const contractSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Contract title is required"],
+      trim: true,
+      maxlength: 150,
     },
 
     fileName: {
@@ -25,8 +25,9 @@ const contractSchema = new mongoose.Schema(
     },
 
     uploadedBy: {
-      type: String,
-      default: "User",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
   },
   {
@@ -34,4 +35,6 @@ const contractSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Contract", contractSchema);
+const Contract = mongoose.model("Contract", contractSchema);
+
+export default Contract;

@@ -1,21 +1,49 @@
 import axios from "axios";
+import { API_CONFIG } from "../config/api";
 
-const API = "http://localhost:5000/api/contracts";
+const API = axios.create({
+  baseURL: `${API_CONFIG.BASE_URL}/api/${API_CONFIG.API_VERSION}/contracts`,
+});
+
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export const uploadContract = (data) => {
-  return axios.post(`${API}/upload`, data);
+  return API.post("/upload", data);
 };
 
 export const getContracts = () => {
-  return axios.get(API);
+  return API.get("/");
+};
+
+export const getContract = (id) => {
+  return API.get(`/${id}`);
+};
+
+export const getContractFile = (id) => {
+  return API.get(`/${id}/file`, {
+    responseType: "blob",
+  });
 };
 
 export const deleteContract = (id) => {
-  return axios.delete(`${API}/${id}`);
+  return API.delete(`/${id}`);
 };
 
 export const updateContract = (id, title) => {
-  return axios.put(`${API}/${id}`, {
+  return API.put(`/${id}`, {
     title,
   });
 };
+
+export default API;

@@ -1,42 +1,117 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import multer from "multer";
+import fs from "fs";
+import path from "path";
 
-const multer = require("multer");
+import authMiddleware from "../middleware/authMiddleware.js";
 
-const {
+import {
   uploadContract,
   getContracts,
-  deleteContract,
+  getContract,
+  getContractFile,
   updateContract,
-} = require("../controllers/contractController");
+  deleteContract,
+} from "../controllers/contractController.js";
+
+const router = express.Router();
+
+
+// ===============================
+// Upload Directory
+// ===============================
+
+const uploadDirectory = path.resolve("uploads");
+
+if (!fs.existsSync(uploadDirectory)) {
+  fs.mkdirSync(uploadDirectory, {
+    recursive: true,
+  });
+}
+
+
+// ===============================
+// Multer Storage
+// ===============================
 
 const storage = multer.diskStorage({
-  destination: "uploads/",
+  destination: (req, file, cb) => {
+    cb(null, uploadDirectory);
+  },
 
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+
+    cb(null, uniqueName);
   },
 });
+
+
+// ===============================
+// PDF Filter
+// ===============================
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === "application/pdf") {
     cb(null, true);
   } else {
-    cb(new Error("Only PDF files allowed"), false);
+    cb(new Error("Only PDF files are allowed"), false);
   }
 };
+
 
 const upload = multer({
   storage,
   fileFilter,
+  limits: {
+    fileSize: 10 * 1024 * 1024,
+  },
 });
 
-router.post("/upload", upload.single("file"), uploadContract);
 
-router.get("/", getContracts);
+// ===============================
+// Routes
+// ===============================
 
-router.delete("/:id", deleteContract);
+router.post(
+  "/upload",
+  authMiddleware,
+  upload.single("file"),
+  uploadContract
+);
 
-router.put("/:id", updateContract);
+router.get(
+  "/",
+  authMiddleware,
+  getContracts
+);
 
-module.exports = router;
+router.get(
+  "/:id",
+  authMiddleware,
+  getContract
+);
+
+router.put(
+  "/:id",
+  authMiddleware,
+  updateContract
+);
+
+router.delete(
+  "/:id",
+  authMiddleware,
+  deleteContract
+);
+
+router.get(
+  "/:id/file",
+  authMiddleware,
+  getContractFile
+);
+
+// ===============================
+// Export
+// ===============================
+
+export default router;

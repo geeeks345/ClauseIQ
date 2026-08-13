@@ -160,9 +160,19 @@ const Dashboard = () => {
               </p>
 
               <div className="quick-actions">
-                <button className="primary-button" type="button">
-                  {role === "admin" ? "Open Review Queue" : "Upload Contract"}
-                </button>
+               <button
+  className="primary-button"
+  type="button"
+  onClick={() => {
+    if (role === "admin") {
+      navigate("/review-queue");
+    } else {
+      navigate("/upload");
+    }
+  }}
+>
+  {role === "admin" ? "Open Review Queue" : "Upload Contract"}
+</button>
                 <button className="secondary-button" type="button">
                   {role === "admin" ? "View Risk Reports" : "View My Tasks"}
                 </button>

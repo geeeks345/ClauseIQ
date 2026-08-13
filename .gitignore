@@ -1,14 +1,20 @@
 # Dependencies
 node_modules/
+frontEnd/node_modules/
+backEnd/node_modules/
 
 # Build output
 dist/
 build/
+frontEnd/dist/
+backEnd/dist/
 
 # Environment variables
 .env
 .env.local
 .env.*.local
+backEnd/.env
+frontEnd/.env
 
 # Logs
 *.log
@@ -16,3 +22,6 @@ build/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Uploaded contract files
+backEnd/uploads/
