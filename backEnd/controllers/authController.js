@@ -17,7 +17,8 @@ const generateToken = (id) => {
 // ==========================
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
+    const normalizedRole = role === "admin" ? "admin" : "user";
 
     // Validation
     if (!name || !email || !password) {
@@ -42,6 +43,7 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password,
+      role: normalizedRole,
     });
 
     res.status(201).json({

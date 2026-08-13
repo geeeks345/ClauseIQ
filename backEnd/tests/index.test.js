@@ -1,24 +1,45 @@
-import request from 'supertest';
-import app from '../index.js';
+import test from "node:test";
+import assert from "node:assert/strict";
+import { createServer } from "node:http";
 
-describe('API Routes', function() {
-  describe('GET /', function() {
-    it('Should return API running message', async function() {
-      const response = await request(app).get('/');
-      expect(response.status).toBe(200);
-      expect(response.text).toBe('API is running...');
-    });
+process.env.NODE_ENV = "test";
 
-    it('Should return plain text response type', async function() {
-      const response = await request(app).get('/');
-      expect(response.headers['content-type']).toContain('text/html');
-    });
-  });
+const { default: app } = await import("../app.js");
 
-  describe('GET /unknown-route', function() {
-    it('Should return 404 for unknown route', async function() {
-      const response = await request(app).get('/unknown-route');
-      expect(response.status).toBe(404);
+const makeRequest = async (path) => {
+  const server = createServer(app);
+
+  await new Promise((resolve) => server.listen(0, resolve));
+
+  const { port } = server.address();
+
+  try {
+    return await fetch(`http://127.0.0.1:${port}${path}`);
+  } finally {
+    await new Promise((resolve, reject) => {
+      server.close((error) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        resolve();
+      });
     });
-  });
+  }
+};
+
+test("GET / returns backend status payload", async () => {
+  const response = await makeRequest("/");
+  const payload = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.equal(payload.success, true);
+  assert.equal(payload.message, "ClauseIQ Backend Running");
+});
+
+test("GET /unknown-route returns 404", async () => {
+  const response = await makeRequest("/unknown-route");
+
+  assert.equal(response.status, 404);
 });
