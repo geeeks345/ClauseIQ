@@ -1,1 +1,4 @@
-// Start coding here
+fastapi
+uvicorn[standard]
+python-multipart
+PyMuPDF

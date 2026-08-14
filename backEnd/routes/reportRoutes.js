@@ -1,21 +1,42 @@
-// Start coding here
 import express from "express";
+
+import authMiddleware from "../middleware/authMiddleware.js";
 
 import {
   getReports,
   getReportById,
   createReport,
+  analyzeContract,
 } from "../controllers/reportController.js";
 
 const router = express.Router();
 
-// Get all reports
-router.get("/", getReports);
+// Get my reports
+router.get(
+  "/",
+  authMiddleware,
+  getReports
+);
+
+// Analyze contract using AI service
+router.post(
+  "/analyze/:contractId",
+  authMiddleware,
+  analyzeContract
+);
 
 // Get single report
-router.get("/:id", getReportById);
+router.get(
+  "/:id",
+  authMiddleware,
+  getReportById
+);
 
-// Create report
-router.post("/", createReport);
+// Create manual report
+router.post(
+  "/",
+  authMiddleware,
+  createReport
+);
 
 export default router;

@@ -1,35 +1,41 @@
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_CONFIG } from "../config/api";
 
-const Dashboard = () => {
-  const navigate = useNavigate();
+const API = axios.create({
+  baseURL: `${API_CONFIG.BASE_URL}/api/reports`,
+});
 
-  const user = JSON.parse(localStorage.getItem("user"));
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
 
-  const logout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
-  return (
-    <div
-      style={{
-        textAlign: "center",
-        marginTop: "100px",
-      }}
-    >
-      <h1>ClauseIQ Dashboard</h1>
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-      <h2>Welcome {user?.name}</h2>
-
-      <p>Email : {user?.email}</p>
-
-      <p>Role : {user?.role}</p>
-
-      <button onClick={logout}>
-        Logout
-      </button>
-    </div>
-  );
+// Get all reports
+export const getReports = () => {
+  return API.get("/");
 };
 
-export default Dashboard;
+// Get single report
+export const getReportById = (id) => {
+  return API.get(`/${id}`);
+};
+
+// Analyze contract using AI service
+export const analyzeContract = (contractId) => {
+  return API.post(`/analyze/${contractId}`);
+};
+
+// Manual report creation
+export const createReport = (data) => {
+  return API.post("/", data);
+};
+
+export default API;

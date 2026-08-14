@@ -25,3 +25,9 @@ Thumbs.db
 
 # Uploaded contract files
 backEnd/uploads/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

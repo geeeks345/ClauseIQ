@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {analyzeContract,} from "../services/reportService";
 
 import {
   getContracts,
-  getContractFile,
   deleteContract,
   updateContract,
+  getContractFile,
 } from "../services/contractService";
 
 export default function MyContracts() {
+  const navigate = useNavigate();
+
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -40,6 +44,9 @@ export default function MyContracts() {
     loadContracts();
   }, []);
 
+  // ==============================
+  // Delete Contract
+  // ==============================
   const handleDelete = async (id) => {
     try {
       await deleteContract(id);
@@ -54,27 +61,60 @@ export default function MyContracts() {
     }
   };
 
+  // ==============================
+  // View Contract
+  // ==============================
   const handleView = async (id) => {
-  try {
-    const response = await getContractFile(id);
+    try {
+      const response = await getContractFile(id);
 
-    const fileURL = window.URL.createObjectURL(
-      new Blob([response.data], {
-        type: "application/pdf",
-      })
+      const fileURL = window.URL.createObjectURL(
+        new Blob([response.data], {
+          type: "application/pdf",
+        })
+      );
+
+      window.open(fileURL, "_blank");
+    } catch (err) {
+      console.error("Failed to open contract:", err);
+
+      setError(
+        err.response?.data?.message ||
+          "Failed to open contract"
+      );
+    }
+  };
+
+  // ==============================
+  // Analyze Contract
+  // ==============================
+ const handleAnalyze = async (contract) => {
+  try {
+    const response = await analyzeContract(
+      contract._id
     );
 
-    window.open(fileURL, "_blank");
-  } catch (err) {
-    console.error("Failed to open contract:", err);
+    const reportId =
+      response.data.report._id;
 
-    setError(
+    navigate(`/reports/${reportId}`);
+
+  } catch (err) {
+    console.error(
+      "Analyze Contract Error:",
+      err
+    );
+
+    alert(
       err.response?.data?.message ||
-        "Failed to open contract"
+        "Failed to analyze contract"
     );
   }
 };
 
+  // ==============================
+  // Edit Contract
+  // ==============================
   const handleEdit = async (id) => {
     const title = prompt("New Title");
 
@@ -95,10 +135,16 @@ export default function MyContracts() {
     }
   };
 
+  // ==============================
+  // Loading
+  // ==============================
   if (loading) {
     return <p>Loading contracts...</p>;
   }
 
+  // ==============================
+  // Page
+  // ==============================
   return (
     <div>
       <h2>My Contracts</h2>
@@ -113,41 +159,31 @@ export default function MyContracts() {
         <p>No contracts uploaded yet.</p>
       ) : (
         contracts.map((contract) => (
-          <div
-            key={contract._id}
-            style={{
-              border: "1px solid #ddd",
-              padding: "15px",
-              marginBottom: "10px",
-              borderRadius: "8px",
-            }}
-          >
+          <div key={contract._id}>
             <h4>{contract.title}</h4>
 
             <p>{contract.fileName}</p>
 
-            <p>
-              Type: {contract.fileType}
-            </p>
-
-            <button onClick={() => handleView(contract._id)}>
-                 View
-              </button>
+            <button
+              onClick={() => handleView(contract._id)}
+            >
+              View
+            </button>
 
             <button
-              onClick={() =>
-                handleEdit(contract._id)
-              }
+              onClick={() => handleAnalyze(contract)}
+            >
+              Analyze
+            </button>
+
+            <button
+              onClick={() => handleEdit(contract._id)}
             >
               Edit
             </button>
 
-            {" "}
-
             <button
-              onClick={() =>
-                handleDelete(contract._id)
-              }
+              onClick={() => handleDelete(contract._id)}
             >
               Delete
             </button>

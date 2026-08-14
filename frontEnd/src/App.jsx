@@ -6,37 +6,50 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Report from "./pages/report";
 
 export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+
       <Route path="/register" element={<Register />} />
+
       <Route
         path="/dashboard"
-            element={
-              <ProtectedRoute>
-              <Dashboard />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/upload"
-  element={
-    <ProtectedRoute>
-      <Upload />
-    </ProtectedRoute>
-  }
-/>
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/contracts"
-  element={
-    <ProtectedRoute>
-      <MyContracts />
-    </ProtectedRoute>
-  }
-/>
+      <Route
+        path="/upload"
+        element={
+          <ProtectedRoute>
+            <Upload />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/contracts"
+        element={
+          <ProtectedRoute>
+            <MyContracts />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reports/:id"
+        element={
+          <ProtectedRoute>
+            <Report />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
