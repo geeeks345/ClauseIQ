@@ -1,33 +1,103 @@
+# ==========================================
 # Dependencies
+# ==========================================
 node_modules/
 frontEnd/node_modules/
 backEnd/node_modules/
 
+# ==========================================
 # Build output
+# ==========================================
 dist/
 build/
 frontEnd/dist/
+frontEnd/build/
 backEnd/dist/
+backEnd/build/
 
-# Environment variables
+# ==========================================
+# Environment variables / secrets
+# ==========================================
 .env
-.env.local
-.env.*.local
-backEnd/.env
+.env.*
+!.env.example
+
 frontEnd/.env
+frontEnd/.env.*
+!.frontEnd/.env.example
 
+backEnd/.env
+backEnd/.env.*
+!.backEnd/.env.example
+
+ai-service/.env
+ai-service/.env.*
+!.ai-service/.env.example
+
+# ==========================================
 # Logs
+# ==========================================
 *.log
+logs/
 
-# OS files
-.DS_Store
-Thumbs.db
-
+# ==========================================
 # Uploaded contract files
+# ==========================================
+uploads/
 backEnd/uploads/
+ai-service/uploads/
 
+# ==========================================
 # Python
+# ==========================================
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+
 .venv/
 venv/
+env/
+
+.pytest_cache/
+.mypy_cache/
+
+# ==========================================
+# Python generated/cache files
+# ==========================================
+*.egg-info/
+.pyre/
+.ruff_cache/
+
+# ==========================================
+# OS files
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# IDE / Editor
+# ==========================================
+.vscode/
+.idea/
+
+# ==========================================
+# Temporary files
+# ==========================================
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ==========================================
+# Test / coverage output
+# ==========================================
+coverage/
+.nyc_output/
+
+# ==========================================
+# Local databases
+# ==========================================
+*.sqlite
+*.sqlite3

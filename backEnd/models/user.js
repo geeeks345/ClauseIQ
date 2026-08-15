@@ -1,42 +1,32 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import validator from "validator";
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required"],
+      required: true,
       trim: true,
-      minlength: 2,
-      maxlength: 50,
     },
 
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: true,
       unique: true,
       lowercase: true,
       trim: true,
-      validate: [validator.isEmail, "Please provide a valid email"],
     },
 
     password: {
       type: String,
-      required: [true, "Password is required"],
-      minlength: 8,
-      select: false,
+      required: true,
+      minlength: 6,
     },
 
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
-    },
-
-    isVerified: {
-      type: Boolean,
-      default: false,
     },
   },
   {
@@ -50,13 +40,24 @@ userSchema.pre("save", async function (next) {
     return next();
   }
 
-  this.password = await bcrypt.hash(this.password, 12);
+  const salt = await bcrypt.genSalt(10);
+
+  this.password = await bcrypt.hash(
+    this.password,
+    salt
+  );
+
   next();
 });
 
 // Compare entered password with hashed password
-userSchema.methods.comparePassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+userSchema.methods.comparePassword = async function (
+  enteredPassword
+) {
+  return bcrypt.compare(
+    enteredPassword,
+    this.password
+  );
 };
 
 const User = mongoose.model("User", userSchema);

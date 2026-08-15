@@ -16,7 +16,6 @@ import {
 
 const router = express.Router();
 
-
 // ===============================
 // Upload Directory
 // ===============================
@@ -28,7 +27,6 @@ if (!fs.existsSync(uploadDirectory)) {
     recursive: true,
   });
 }
-
 
 // ===============================
 // Multer Storage
@@ -46,7 +44,6 @@ const storage = multer.diskStorage({
   },
 });
 
-
 // ===============================
 // PDF Filter
 // ===============================
@@ -59,7 +56,6 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-
 const upload = multer({
   storage,
   fileFilter,
@@ -67,7 +63,6 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024,
   },
 });
-
 
 // ===============================
 // Routes

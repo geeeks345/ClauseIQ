@@ -4,9 +4,7 @@ const contractSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Contract title is required"],
-      trim: true,
-      maxlength: 150,
+      required: true,
     },
 
     fileName: {

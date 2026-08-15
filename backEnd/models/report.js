@@ -1,63 +1,7 @@
 import mongoose from "mongoose";
 
-const clauseSchema = new mongoose.Schema(
-  {
-    clauseText: {
-      type: String,
-      required: true,
-    },
-
-    riskScore: {
-      type: Number,
-      required: true,
-      min: 0,
-      max: 100,
-    },
-
-    riskLevel: {
-      type: String,
-      enum: ["low", "medium", "high"],
-      required: true,
-    },
-
-    reason: {
-      type: String,
-      default: "",
-    },
-
-    category: {
-      type: String,
-      default: "general",
-    },
-
-    plainEnglish: {
-      type: String,
-      default: "",
-    },
-
-    whyItMatters: {
-      type: String,
-      default: "",
-    },
-
-    recommendation: {
-      type: String,
-      default: "",
-    },
-  },
-  {
-    _id: true,
-  }
-);
-
 const reportSchema = new mongoose.Schema(
   {
-    contractId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Contract",
-      required: true,
-    },
-
     title: {
       type: String,
       required: [true, "Report title is required"],
@@ -95,12 +39,6 @@ const reportSchema = new mongoose.Schema(
     summary: {
       type: String,
       default: "",
-      trim: true,
-    },
-
-    clauses: {
-      type: [clauseSchema],
-      default: [],
     },
 
     createdBy: {

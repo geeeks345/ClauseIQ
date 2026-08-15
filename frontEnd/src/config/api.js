@@ -1,4 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+  BASE_URL:
+    "https://6a69acdee64fad7400e3e3f0-api-capstone.myanatomy.ai",
   API_VERSION: "v1",
 };
