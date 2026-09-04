@@ -1,0 +1,15 @@
+{
+  "buildCommand": "cd frontEnd && npm install && CI=false npm run build",
+  "outputDirectory": "frontEnd/build",
+  "framework": "create-react-app",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://6a69acdee64fad7400e3e3f0-api-capstone.myanatomy.ai/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

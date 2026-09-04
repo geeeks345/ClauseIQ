@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Sparkles, Scale, RefreshCw, Lightbulb } from 'lucide-react';
+import { Send, Bot, User, Scale, RefreshCw, Lightbulb } from 'lucide-react';
 import { useAI } from '../../context/AIContext';
 import { Button, Card } from '../common';
 
