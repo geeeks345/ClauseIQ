@@ -53,7 +53,7 @@ class RAGSearchRequest(BaseModel):
     topK: Optional[int] = 3
 
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 def root():
     return {
         "service": "ClauseIQ AI Service",
@@ -62,7 +62,7 @@ def root():
         "endpoints": ["/health", "/api/v1/ai/parse", "/api/v1/ai/analyze", "/api/v1/ai/chat", "/api/v1/ai/compare", "/api/v1/ai/rag"]
     }
 
-@app.get("/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health_check():
     return {
         "status": "healthy",
@@ -117,4 +117,5 @@ def rag_search(req: RAGSearchRequest):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)

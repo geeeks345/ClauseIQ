@@ -1,6 +1,12 @@
 import os
 import re
-import fitz  # PyMuPDF
+try:
+    import pymupdf as fitz
+except ImportError:
+    try:
+        import fitz
+    except ImportError:
+        fitz = None
 
 def extract_text_from_file(file_path: str, file_type: str, original_name: str = "") -> dict:
     """
@@ -20,7 +26,7 @@ def extract_text_from_file(file_path: str, file_type: str, original_name: str = 
     pages = 1
 
     try:
-        if ext == "pdf":
+        if ext == "pdf" and fitz:
             doc = fitz.open(file_path)
             pages = max(1, len(doc))
             page_texts = []
