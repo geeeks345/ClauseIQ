@@ -4,29 +4,13 @@
   "description": "ClauseIQ v1.0.0 - Production AI-Powered Contract Intelligence Platform",
   "private": true,
   "scripts": {
-    "start": "npm --prefix backEnd start",
+    "build": "cd frontEnd && npm install --legacy-peer-deps && CI=false npm run build",
+    "start": "npm --prefix frontEnd start",
     "start:backend": "npm --prefix backEnd start",
     "start:frontend": "npm --prefix frontEnd start",
     "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"bgBlue.bold,bgGreen.bold\" \"npm --prefix backEnd run dev\" \"npm --prefix frontEnd start\"",
-    "dev:backend": "npm --prefix backEnd run dev",
-    "dev:frontend": "npm --prefix frontEnd start",
     "seed": "npm --prefix backEnd run seed",
-    "test": "npm --prefix backEnd test",
-    "build": "npm --prefix frontEnd run build"
-  },
-  "dependencies": {
-    "axios": "^1.7.9",
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "express-rate-limit": "^7.5.0",
-    "helmet": "^8.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.5",
-    "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
-    "pdfkit": "^0.16.0"
+    "test": "npm --prefix backEnd test"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",

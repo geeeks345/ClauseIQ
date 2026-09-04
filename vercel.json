@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd frontEnd && npm install && CI=false npm run build",
+  "buildCommand": "cd frontEnd && npm install --legacy-peer-deps && CI=false npm run build",
   "outputDirectory": "frontEnd/build",
   "framework": "create-react-app",
   "rewrites": [
