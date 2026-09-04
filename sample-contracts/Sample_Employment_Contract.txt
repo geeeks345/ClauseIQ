@@ -1,0 +1,28 @@
+EMPLOYMENT AND RESTRICTIVE COVENANTS AGREEMENT
+
+This Employment Agreement ("Agreement") is made and entered into as of January 15, 2026, by and between Apex Global Technologies Pvt Ltd ("Company") and Jane Doe ("Employee").
+
+1. POSITION AND DUTIES
+The Company hereby employs Employee as Senior Software Architect. Employee agrees to devote full business time, attention, and energies to the diligent performance of assigned responsibilities.
+
+2. COMPENSATION AND REMUNERATION
+Company shall pay Employee a gross annual salary of $160,000 payable in semi-monthly installments, subject to standard deductions. Company reserves the right in its sole discretion to adjust bonus targets and commission allocations based on quarterly operational milestones.
+
+3. TERM AND TERMINATION
+(a) At-Will Termination: The Company reserves the right to terminate Employee's employment at any time for convenience without prior cause or justification, immediately upon written notice, without obligation to provide severance pay or notice wages.
+(b) Employee Notice: Employee may terminate employment by providing not less than ninety (90) days prior written notice. Failure to serve the complete notice period shall result in forfeiture of accrued bonuses and deduction of thirty (30) days wages as liquidated damages.
+
+4. NON-COMPETE AND RESTRICTIVE COVENANTS
+(a) Restraint of Trade: In consideration of specialized training and trade secret access, Employee agrees that during employment and for a period of twenty-four (24) consecutive months following termination of employment for any reason, Employee shall not directly or indirectly engage in, perform services for, invest in, or be employed by any enterprise operating in the software intelligence, cloud analytics, or legal AI domain worldwide.
+(b) Non-Solicitation: Employee shall not for thirty-six (36) months solicit any customer, contractor, or employee of Company.
+
+5. INTELLECTUAL PROPERTY AND WORK-FOR-HIRE
+Employee agrees that all copyrightable works, patentable inventions, computer code, and methodologies created, conceived, or authored during the term of employment belong solely and exclusively to Company as "work made for hire".
+
+6. CONFIDENTIALITY AND NON-DISCLOSURE
+Employee shall hold in strict confidence and in perpetuity all Disclosed Proprietary Information, source code, financial projections, customer rosters, and algorithm blueprints.
+
+7. DISPUTE RESOLUTION AND EXCLUSIVE JURISDICTION
+Any dispute, claim, or controversy arising out of this Agreement shall be referred to and conclusively resolved by binding arbitration conducted by a sole arbitrator nominated exclusively by the Board of Directors of Company. The seat and venue of arbitration shall be Company Headquarters.
+
+IN WITNESS WHEREOF, the parties hereto have executed this Employment Agreement.

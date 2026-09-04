@@ -1,0 +1,22 @@
+MASTER SAAS CLOUD SERVICES AGREEMENT
+
+This Master Cloud Services Agreement ("Agreement") is effective as of February 1, 2026 between CloudScale AI Inc ("Vendor") and Enterprise Corp ("Customer").
+
+1. SUBSCRIPTION SERVICES AND SLA
+Vendor grants Customer a non-exclusive, non-transferable subscription license to access the CloudScale Platform. Vendor guarantees a 99.9% monthly uptime service level agreement.
+
+2. PAYMENT TERMS AND INVOICING
+Fees are invoiced annually in advance. Invoices are payable Net 30 days from date of issuance. Late payments shall accrue interest at the rate of 1.5% per month or the maximum statutory limit.
+
+3. EVERGREEN AUTO-RENEWAL AND CANCELLATION
+This Agreement shall automatically renew for successive twelve (12) month terms upon expiration of the initial term, unless Customer provides written notice of non-renewal via registered postal mail at least ninety (90) days prior to the expiration of the then-current term. Prices upon renewal shall increase by 10% per annum automatically.
+
+4. LIMITATION OF LIABILITY AND INDEMNIFICATION
+(a) Cap on Vendor Liability: Under no circumstances shall Vendor's total aggregate liability arising out of this Agreement exceed the fees actually paid by Customer in the preceding three (3) months.
+(b) Customer Indemnification: Customer agrees to defend, indemnify, and hold harmless Vendor against all third-party claims, liabilities, attorney fees, and consequential damages without financial limitation.
+
+5. CONFIDENTIALITY
+Each party shall preserve the confidentiality of the other party's proprietary technical and commercial data for a period of three (3) years from date of disclosure.
+
+6. GOVERNING LAW AND ARBITRATION
+This Agreement is governed by the laws of Delaware. All disputes shall be resolved by arbitration under the Commercial Rules of the American Arbitration Association in New York, NY.
