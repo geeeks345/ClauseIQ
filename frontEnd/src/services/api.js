@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-// Smart auto-detecting baseURL (Zero configuration needed on Vercel or SandboxPro)
+// Smart auto-detecting baseURL for Render Cloud, MyAnatomy SandboxPro & Localhost
 const getBaseURL = () => {
-  // 1. Explicit env variable (if provided)
+  // 1. Explicit environment variable (if passed via Render or local .env)
   if (typeof process !== 'undefined' && process.env && process.env.REACT_APP_API_URL) {
     return process.env.REACT_APP_API_URL;
   }
 
-  // 2. If running locally in development, use local backend port
+  // 2. If running locally on localhost in development
   if (typeof window !== 'undefined' && window.location && window.location.hostname) {
     const host = window.location.hostname;
     if (host === 'localhost' || host === '127.0.0.1') {
@@ -15,13 +15,13 @@ const getBaseURL = () => {
     }
   }
 
-  // 3. Default for all Cloud / Public deployments (Vercel, MyAnatomy SandboxPro, etc.)
-  return 'https://6a69acdee64fad7400e3e3f0-api-capstone.myanatomy.ai/api/v1';
+  // 3. Default Production Backend URL on Render Cloud
+  return 'https://clauseiq-backend-vbfc.onrender.com/api/v1';
 };
 
 const api = axios.create({
   baseURL: getBaseURL(),
-  timeout: 45000,
+  timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -36,7 +36,7 @@ api.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
       }
     } catch (e) {
-      // LocalStorage fallback for sandboxed iframes
+      // Fallback for sandboxed iframes
     }
     return config;
   },
